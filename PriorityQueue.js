@@ -1,14 +1,16 @@
 class Node {
-  constructor(value, priority){
-    this.value = value;
+  constructor(priority){
     this.priority = priority;
   }
 }
 
-export default class PriorityQueue {
+class PriorityQueue {
   constructor(){
     this.data = [];
+    this.priorityListQueue = {}; 
+    this.priorityListQueueIndex = {};
   };
+      
 
   swap(arr, first, second){
     let temp = arr[first];
@@ -17,7 +19,13 @@ export default class PriorityQueue {
   }
 
   enqueue(value, priority){
-    let node = new Node(value, priority);
+    let node = new Node(priority);
+    if(priority in this.priorityListQueue){
+         this.priorityListQueue[priority].push(value);
+    } else {
+         this.priorityListQueue[priority] = [value];
+         this.priorityListQueueIndex[priority] = 0;
+    }  
 
     this.data.push(node);
 
@@ -90,7 +98,9 @@ export default class PriorityQueue {
 
     }
 
-    return removed;
-
+    const  priority = removed.priority;
+    const data = this.priorityListQueue[priority][this.priorityListQueueIndex[priority]];
+    this.priorityListQueueIndex[priority] = 1 + this.priorityListQueueIndex[priority];
+    return data;
   }
 }
