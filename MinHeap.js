@@ -16,7 +16,7 @@ export default class MinHeap {
     let index = this.data.length - 1;
     let parentIndex = Math.floor((index - 1)/2);
 
-    while(this.data[parentIndex] && (this.data[index] < this.data[parentIndex])){
+    while(this.data[index] < this.data[parentIndex]){
 
       this.swap(this.data, index, parentIndex);
       index = parentIndex;
